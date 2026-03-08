@@ -1,113 +1,22 @@
 plugins {
     id 'java'
-    id 'jacoco'
 }
 
-group = 'com.example'
-version = '1.0.0'
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+allprojects {
+    group = 'com.example'
+    version = '1.0.1'
+    
+    repositories {
+        mavenCentral()
     }
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        name = 'papermc'
-        url = 'https://repo.papermc.io/repository/maven-public/'
+subprojects {
+    apply plugin: 'java'
+    
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
     }
 }
-
-dependencies {
-    // Velocity API 3.5.0
-    compileOnly 'com.velocitypowered:velocity-api:3.5.0-SNAPSHOT'
-    annotationProcessor 'com.velocitypowered:velocity-api:3.5.0-SNAPSHOT'
-    
-    // TOML parsing library
-    implementation 'com.electronwill.night-config:toml:3.6.7'
-    
-    // SLF4J for logging (needed for tests)
-    testImplementation 'org.slf4j:slf4j-api:2.0.9'
-    testImplementation 'org.slf4j:slf4j-simple:2.0.9'
-    
-    // Velocity API for tests
-    testImplementation 'com.velocitypowered:velocity-api:3.5.0-SNAPSHOT'
-    
-    // Testing frameworks
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
-    testImplementation 'net.jqwik:jqwik:1.8.2'
-    testImplementation 'org.mockito:mockito-core:5.8.0'
-    testImplementation 'org.mockito:mockito-junit-jupiter:5.8.0'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
-jar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    
-    // Include dependencies in the JAR (fat JAR for night-config)
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-    
-    // Add manifest attributes
-    manifest {
-        attributes(
-            'Implementation-Title': project.name,
-            'Implementation-Version': project.version,
-            'Built-By': System.getProperty('user.name'),
-            'Built-JDK': System.getProperty('java.version'),
-            'Main-Class': 'com.example.velocityversiontinmoli.VelocityVersionTinmoli'
-        )
-    }
-    
-    // Exclude signature files from dependencies to avoid security exceptions
-    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
-}
-
-jacoco {
-    toolVersion = "0.8.11"
-}
-
-jacocoTestReport {
-    dependsOn test
-    reports {
-        xml.required = true
-        html.required = true
-    }
-}
-
-test {
-    finalizedBy jacocoTestReport
-}
-
-// Ensure resources are processed before building JAR
-processResources {
-    // Expand version in velocity-plugin.json
-    filesMatching('velocity-plugin.json') {
-        expand(
-            'version': project.version
-        )
-    }
-}
-
-// Task to build and copy JAR to a convenient location
-task buildPlugin(type: Copy) {
-    dependsOn jar
-    from jar.archiveFile
-    into file("${projectDir}/build/plugins")
-    doLast {
-        println "Plugin JAR built: ${projectDir}/build/plugins/${jar.archiveFileName.get()}"
-    }
-}
-
-// Clean task to remove build artifacts
-clean {
-    delete "${projectDir}/build/plugins"
-}
-

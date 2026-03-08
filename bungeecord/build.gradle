@@ -1,0 +1,99 @@
+plugins {
+    id 'jacoco'
+}
+
+// 使用 Java 21 编译，但目标字节码为 Java 17
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+    maven {
+        name = 'minecraft-libraries'
+        url = 'https://libraries.minecraft.net/'
+    }
+}
+
+dependencies {
+    // BungeeCord API
+    compileOnly('net.md-5:bungeecord-api:1.16-R0.4') {
+        exclude group: 'net.md-5', module: 'brigadier'
+    }
+    
+    // TOML parsing library
+    implementation 'com.electronwill.night-config:toml:3.6.7'
+    
+    // BungeeCord API for tests
+    testImplementation('net.md-5:bungeecord-api:1.16-R0.4') {
+        exclude group: 'net.md-5', module: 'brigadier'
+    }
+    
+    // Testing frameworks
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testImplementation 'org.mockito:mockito-core:5.8.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.8.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveBaseName = 'versiontinmoli-bungeecord'
+    
+    // Include dependencies in the JAR (fat JAR for night-config)
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    
+    // Add manifest attributes
+    manifest {
+        attributes(
+            'Implementation-Title': 'VersionTinmoli-BungeeCord',
+            'Implementation-Version': project.version,
+            'Built-By': System.getProperty('user.name'),
+            'Built-JDK': System.getProperty('java.version')
+        )
+    }
+    
+    // Exclude signature files from dependencies to avoid security exceptions
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
+}
+
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+// Task to build and copy JAR to a convenient location
+task buildPlugin(type: Copy) {
+    dependsOn jar
+    from jar.archiveFile
+    into file("${rootProject.projectDir}/build/plugins")
+    doLast {
+        println "BungeeCord plugin JAR built: ${rootProject.projectDir}/build/plugins/${jar.archiveFileName.get()}"
+    }
+}
+
+// Clean task to remove build artifacts
+clean {
+    delete "${rootProject.projectDir}/build/plugins"
+}

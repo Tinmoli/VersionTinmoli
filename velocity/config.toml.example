@@ -1,0 +1,11 @@
+# VersionTinmoli 配置文件
+# 自定义服务器列表中显示的版本名称
+
+# 默认配置
+version_name = "Velocity 1.8.x-1.21.11"
+
+# ===== 示例 =====
+# version_name = "我的服务器 1.20"
+# version_name = "自定义版本名称"
+# version_name = "Premium Network v1.0"
+# version_name = "Minecraft 1.8.x-1.21.11"
