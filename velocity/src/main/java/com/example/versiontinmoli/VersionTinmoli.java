@@ -19,7 +19,7 @@ import java.nio.file.Path;
 @Plugin(
     id = "versiontinmoli",
     name = "VersionTinmoli",
-    version = "1.0.1",
+    version = "1.0.2",
     authors = {"Author"}
 )
 public class VersionTinmoli {
@@ -27,6 +27,7 @@ public class VersionTinmoli {
     private final Logger logger;
     private final Path dataDirectory;
     private ConfigLoader configLoader;
+    private LanguageLoader languageLoader;
 
     /**
      * Constructs the main plugin class with dependency injection.
@@ -53,6 +54,16 @@ public class VersionTinmoli {
         return configLoader;
     }
 
+    /**
+     * Returns the LanguageLoader instance.
+     * This method provides access to the language loader for other components.
+     *
+     * @return the LanguageLoader instance, or null if not yet initialized
+     */
+    public LanguageLoader getLanguageLoader() {
+        return languageLoader;
+    }
+
 
     /**
      * Handles the proxy initialization event.
@@ -64,11 +75,18 @@ public class VersionTinmoli {
      */
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
+        // Initialize LanguageLoader instance first (with default language)
+        languageLoader = new LanguageLoader(dataDirectory, logger);
+        languageLoader.load("en_US"); // Load default language first
+        
         // Initialize ConfigLoader instance
-        configLoader = new ConfigLoader(dataDirectory, logger);
+        configLoader = new ConfigLoader(dataDirectory, logger, languageLoader);
 
-        // Load configuration from config.toml
+        // Load configuration from config.yml
         configLoader.load();
+
+        // Reload language file based on config
+        languageLoader.load(configLoader.getLanguage());
 
         // Create PingEventListener instance
         PingEventListener pingEventListener = new PingEventListener(configLoader, logger);
@@ -76,8 +94,23 @@ public class VersionTinmoli {
         // Register the event listener with the EventManager
         server.getEventManager().register(this, pingEventListener);
 
+        // Register command
+        CommandHandler commandHandler = new CommandHandler(this, server);
+        server.getCommandManager().register(
+            server.getCommandManager().metaBuilder("vt")
+                .aliases("versiontinmoli")
+                .build(),
+            commandHandler
+        );
+
         // Log startup message
-        logger.info("VersionTinmoli plugin has been enabled");
+        logger.info(languageLoader.getMessage("plugin.enabled"));
+        
+        // Check for updates asynchronously (if enabled)
+        if (configLoader.isCheckUpdates()) {
+            UpdateChecker updateChecker = new UpdateChecker("1.0.2", logger);
+            updateChecker.checkForUpdates();
+        }
     }
 
     /**
@@ -90,7 +123,7 @@ public class VersionTinmoli {
     @Subscribe
     public void onProxyShutdown(ProxyShutdownEvent event) {
         // Log shutdown message
-        logger.info("VersionTinmoli plugin has been disabled");
+        logger.info(languageLoader.getMessage("plugin.disabled"));
     }
 
 }

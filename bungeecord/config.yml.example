@@ -1,0 +1,45 @@
+# VersionTinmoli Configuration File
+# Customize the version name displayed in the server list
+
+# Language setting (en_US or zh_CN)
+language: "en_US"
+
+# Version name configuration
+version_name: "BungeeCord 1.8.x-1.21.11"
+
+# ===== 颜色支持说明 =====
+# 
+# BungeeCord 平台支持传统颜色代码（使用 & 或 § 符号）：
+#
+# 1. 颜色代码
+#   &0 黑色    &1 深蓝    &2 深绿    &3 深青
+#   &4 深红    &5 紫色    &6 金色    &7 灰色
+#   &8 深灰    &9 蓝色    &a 绿色    &b 青色
+#   &c 红色    &d 粉色    &e 黄色    &f 白色
+#
+# 2. 格式代码
+#   &l 粗体
+#   &o 斜体
+#   &n 下划线
+#   &m 删除线
+#   &k 混淆
+#   &r 重置格式
+#
+# 3. 注意事项
+#   - 可以使用 & 或 § 符号（推荐使用 &，更易输入）
+#   - 格式代码会影响后续所有文本，直到遇到 &r 或新的颜色代码
+#   - 可以组合使用多个格式代码（如 &c&l 表示红色粗体）
+#
+# ===== 示例 =====
+#
+# 简单颜色：
+#   version_name: "&6BungeeCord &71.8-1.21"
+#   version_name: "&c&lVIP &e&lServer"
+#
+# 组合格式：
+#   version_name: "&6&lGold Bold &7&oGray Italic"
+#   version_name: "&a&lGreen Bold &r&7Gray Normal"
+#
+# 复杂组合：
+#   version_name: "&c&l&nRed Bold Underline &r&7| &a1.8-1.21"
+#   version_name: "&6&l[&e&lVIP&6&l] &fWhite Text"

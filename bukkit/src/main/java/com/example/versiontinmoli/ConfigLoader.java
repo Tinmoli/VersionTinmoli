@@ -1,8 +1,7 @@
 package com.example.versiontinmoli;
 
-import net.md_5.bungee.config.Configuration;
-import net.md_5.bungee.config.ConfigurationProvider;
-import net.md_5.bungee.config.YamlConfiguration;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,7 +19,6 @@ public class ConfigLoader {
     private String versionName;
     private String language;
     private boolean checkUpdates;
-    private final ConfigurationProvider provider;
 
     /**
      * Constructs a new ConfigLoader.
@@ -33,10 +31,9 @@ public class ConfigLoader {
         this.configPath = dataDirectory.resolve("config.yml");
         this.logger = logger;
         this.languageLoader = languageLoader;
-        this.versionName = "BungeeCord 1.8.x-1.21.11"; // Default value
+        this.versionName = "Minecraft 1.20.1-1.21.11"; // Default value
         this.language = "en_US"; // Default language
         this.checkUpdates = true; // Default: check for updates
-        this.provider = ConfigurationProvider.getProvider(YamlConfiguration.class);
     }
 
     /**
@@ -53,7 +50,7 @@ public class ConfigLoader {
             }
 
             // Load and parse the YAML file
-            Configuration config = provider.load(configPath.toFile());
+            FileConfiguration config = YamlConfiguration.loadConfiguration(configPath.toFile());
             
             // Parse language field
             if (config.contains("language")) {
@@ -68,14 +65,14 @@ public class ConfigLoader {
             // Parse version_name field with type checking
             if (!config.contains("version_name")) {
                 logger.warning(languageLoader.getMessage("config.field_not_found"));
-                versionName = "BungeeCord 1.8.x-1.21.11";
+                versionName = "Minecraft 1.20.1-1.21.11";
             } else {
-                versionName = config.getString("version_name", "BungeeCord 1.8.x-1.21.11");
+                versionName = config.getString("version_name", "Minecraft 1.20.1-1.21.11");
                 logger.info(languageLoader.getMessage("config.loaded", versionName));
             }
         } catch (Exception e) {
             logger.severe(languageLoader.getMessage("config.parse_failed", e.getMessage()));
-            versionName = "BungeeCord 1.8.x-1.21.11";
+            versionName = "Minecraft 1.20.1-1.21.11";
         }
     }
 
@@ -98,27 +95,27 @@ public class ConfigLoader {
                 "check_updates: true\n" +
                 "\n" +
                 "# Version name configuration\n" +
-                "version_name: \"BungeeCord 1.8.x-1.21.11\"\n" +
+                "version_name: \"Minecraft 1.20.1-1.21.11\"\n" +
                 "\n" +
                 "# ===== Color Support =====\n" +
                 "# \n" +
-                "# BungeeCord platform supports legacy color codes:\n" +
+                "# Bukkit platform supports legacy color codes:\n" +
                 "#   &c red, &6 gold, &e yellow, &a green, &b aqua, &9 blue\n" +
                 "#   &l bold, &o italic, &n underline, &m strikethrough, &r reset\n" +
                 "#\n" +
                 "# Examples:\n" +
-                "#   version_name: \"&6&lVIP &7| &a1.8-1.21\"\n" +
-                "#   version_name: \"&c&lPremium &f&l| &e1.20.1\"\n";
+                "#   version_name: \"&c&lPremium &f&l| &e1.20.1\"\n" +
+                "#   version_name: \"&6Minecraft &71.20.1-1.21.11\"\n";
             
             // Write the default configuration to file
             Files.writeString(configPath, defaultConfig);
             logger.info("Created default configuration file: " + configPath);
             
             // Set the default version name
-            versionName = "BungeeCord 1.8.x-1.21.11";
+            versionName = "Minecraft 1.20.1-1.21.11";
         } catch (IOException e) {
             logger.severe("Failed to create default config file: " + e.getMessage() + ". Using default version name.");
-            versionName = "BungeeCord 1.8.x-1.21.11";
+            versionName = "Minecraft 1.20.1-1.21.11";
         }
     }
 
@@ -181,13 +178,13 @@ public class ConfigLoader {
             // Add color format help
             content.append("# ===== Color Support =====\n");
             content.append("# \n");
-            content.append("# BungeeCord platform supports legacy color codes:\n");
+            content.append("# Bukkit platform supports legacy color codes:\n");
             content.append("#   &c red, &6 gold, &e yellow, &a green, &b aqua, &9 blue\n");
             content.append("#   &l bold, &o italic, &n underline, &m strikethrough, &r reset\n");
             content.append("#\n");
             content.append("# Examples:\n");
-            content.append("#   version_name: \"&6&lVIP &7| &a1.8-1.21\"\n");
             content.append("#   version_name: \"&c&lPremium &f&l| &e1.20.1\"\n");
+            content.append("#   version_name: \"&6Minecraft &71.20.1-1.21.11\"\n");
             
             Files.writeString(configPath, content.toString());
             logger.info(languageLoader.getMessage("config.saved_success", configPath.toString()));

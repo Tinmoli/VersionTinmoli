@@ -25,8 +25,10 @@ dependencies {
         exclude group: 'net.md-5', module: 'brigadier'
     }
     
-    // TOML parsing library
-    implementation 'com.electronwill.night-config:toml:3.6.7'
+    // BungeeCord 内置 YAML 支持，无需额外依赖
+    
+    // JSON parsing for update checker
+    implementation 'com.google.code.gson:gson:2.10.1'
     
     // BungeeCord API for tests
     testImplementation('net.md-5:bungeecord-api:1.16-R0.4') {
@@ -48,7 +50,7 @@ jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     archiveBaseName = 'versiontinmoli-bungeecord'
     
-    // Include dependencies in the JAR (fat JAR for night-config)
+    // BungeeCord 使用内置 YAML 支持，无需打包额外依赖
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }

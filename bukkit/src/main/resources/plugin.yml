@@ -1,0 +1,16 @@
+name: VersionTinmoli
+version: 1.0.2
+main: com.example.versiontinmoli.VersionTinmoli
+author: Author
+description: A lightweight Bukkit plugin to customize the version name displayed in the server list
+api-version: '1.20'
+commands:
+  vt:
+    description: VersionTinmoli main command
+    usage: /vt [reload|md <name>]
+    aliases: [versiontinmoli]
+    permission: versiontinmoli.admin
+permissions:
+  versiontinmoli.admin:
+    description: Allows access to all VersionTinmoli commands
+    default: op

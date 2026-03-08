@@ -1,0 +1,32 @@
+# 简体中文语言文件 - VersionTinmoli
+
+plugin:
+  enabled: "VersionTinmoli 插件已启用"
+  disabled: "VersionTinmoli 插件已禁用"
+
+config:
+  field_not_found: "配置文件中未找到 version_name 字段。使用默认值。"
+  loaded: "已从配置加载版本名称: {0}"
+  invalid_type: "version_name 类型无效: {0}。使用默认值。"
+  parse_failed: "解析 config.yml 失败: {0}。使用默认版本名称。"
+  saved_success: "配置已成功保存到: {0}"
+  save_failed: "保存配置文件失败: {0}"
+
+command:
+  help_title: "VersionTinmoli 命令"
+  help_usage: "用法: /vt <reload|md>"
+  help_reload: "  /vt reload - 重载配置"
+  help_modify: "  /vt md <名称> - 修改版本名称"
+  unknown_command: "未知命令。使用 /vt 查看帮助。"
+  no_permission: "你没有权限使用此命令。"
+
+reload:
+  success: "配置重载成功！"
+  current_version: "当前版本名称: {0}"
+  failed: "重载配置失败: {0}"
+
+modify:
+  usage: "用法: /vt md <名称>"
+  success: "版本名称已更新为: {0}"
+  saved: "配置已保存到文件。"
+  failed: "修改版本名称失败: {0}"

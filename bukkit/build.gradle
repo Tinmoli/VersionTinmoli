@@ -2,34 +2,33 @@ plugins {
     id 'jacoco'
 }
 
+// 使用 Java 21 编译，但目标字节码为 Java 17
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 repositories {
     maven {
-        name = 'papermc'
-        url = 'https://repo.papermc.io/repository/maven-public/'
+        name = 'spigotmc'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
     }
 }
 
 dependencies {
-    // Velocity API 3.5.0
-    compileOnly 'com.velocitypowered:velocity-api:3.5.0-SNAPSHOT'
-    annotationProcessor 'com.velocitypowered:velocity-api:3.5.0-SNAPSHOT'
+    // Spigot API (支持 1.20.1+)
+    compileOnly 'org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT'
     
-    // YAML parsing library
-    implementation 'org.yaml:snakeyaml:2.2'
+    // Bukkit 内置 YAML 支持，无需额外依赖
     
     // JSON parsing for update checker
     implementation 'com.google.code.gson:gson:2.10.1'
     
-    // SLF4J for logging (needed for tests)
-    testImplementation 'org.slf4j:slf4j-api:2.0.9'
-    testImplementation 'org.slf4j:slf4j-simple:2.0.9'
-    
-    // Velocity API for tests
-    testImplementation 'com.velocitypowered:velocity-api:3.5.0-SNAPSHOT'
+    // Spigot API for tests
+    testImplementation 'org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT'
     
     // Testing frameworks
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
-    testImplementation 'net.jqwik:jqwik:1.8.2'
     testImplementation 'org.mockito:mockito-core:5.8.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.8.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -41,9 +40,9 @@ tasks.named('test') {
 
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    archiveBaseName = 'versiontinmoli-velocity'
+    archiveBaseName = 'versiontinmoli-bukkit'
     
-    // Include dependencies in the JAR (fat JAR for SnakeYAML)
+    // Bukkit 使用内置 YAML 支持，无需打包额外依赖
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
@@ -51,11 +50,10 @@ jar {
     // Add manifest attributes
     manifest {
         attributes(
-            'Implementation-Title': 'VersionTinmoli-Velocity',
+            'Implementation-Title': 'VersionTinmoli-Bukkit',
             'Implementation-Version': project.version,
             'Built-By': System.getProperty('user.name'),
-            'Built-JDK': System.getProperty('java.version'),
-            'Main-Class': 'com.example.versiontinmoli.VersionTinmoli'
+            'Built-JDK': System.getProperty('java.version')
         )
     }
     
@@ -79,23 +77,13 @@ test {
     finalizedBy jacocoTestReport
 }
 
-// Ensure resources are processed before building JAR
-processResources {
-    // Expand version in velocity-plugin.json
-    filesMatching('velocity-plugin.json') {
-        expand(
-            'version': project.version
-        )
-    }
-}
-
 // Task to build and copy JAR to a convenient location
 task buildPlugin(type: Copy) {
     dependsOn jar
     from jar.archiveFile
     into file("${rootProject.projectDir}/build/plugins")
     doLast {
-        println "Velocity plugin JAR built: ${rootProject.projectDir}/build/plugins/${jar.archiveFileName.get()}"
+        println "Bukkit plugin JAR built: ${rootProject.projectDir}/build/plugins/${jar.archiveFileName.get()}"
     }
 }
 

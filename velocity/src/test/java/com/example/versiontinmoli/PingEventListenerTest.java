@@ -122,9 +122,9 @@ class PingEventListenerTest {
         // Act
         listener.onProxyPing(event);
         
-        // Assert - MiniMessage format should be preserved as-is
+        // Assert - MiniMessage format should be converted to legacy format (§c for red)
         verify(builder).version(argThat(version -> 
-            version.getName().equals("<red>Custom Server</red>")
+            version.getName().contains("§c") && version.getName().contains("Custom Server")
         ));
     }
 

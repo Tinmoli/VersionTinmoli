@@ -1,0 +1,55 @@
+# VersionTinmoli Configuration File
+# Customize the version name displayed in the server list
+
+# Language setting (en_US or zh_CN)
+language: "en_US"
+
+# Version name configuration
+version_name: "Velocity 1.8.x-1.21.11"
+
+# ===== 颜色支持说明 =====
+# 
+# Velocity 平台支持 MiniMessage 格式：
+#
+# 1. 命名颜色
+#   <red>, <gold>, <yellow>, <green>, <aqua>, <blue>, <light_purple>
+#   <dark_red>, <dark_green>, <dark_blue>, <dark_aqua>, <dark_purple>
+#   <white>, <gray>, <dark_gray>, <black>
+#
+# 2. RGB 颜色（Minecraft 1.16+）
+#   <#FF5555>红色文本
+#   <color:#55FF55>绿色文本</color>
+#
+# 3. 渐变效果
+#   <gradient:red:blue>渐变文本</gradient>
+#   <gradient:#FF0000:#00FF00>自定义渐变</gradient>
+#   <rainbow>彩虹文本</rainbow>
+#
+# 4. 样式
+#   <bold>粗体</bold>
+#   <italic>斜体</italic>
+#   <underlined>下划线</underlined>
+#   <strikethrough>删除线</strikethrough>
+#   <obfuscated>混淆</obfuscated>
+#
+# 5. 组合使用
+#   <bold><gold>粗体金色</gold></bold>
+#   <gradient:red:blue><bold>粗体渐变</bold></gradient>
+#
+# ===== 示例 =====
+#
+# 简单颜色：
+#   version_name: "<gold>Velocity</gold> <gray>1.8-1.21</gray>"
+#   version_name: "<red>VIP</red> <yellow>Server</yellow>"
+#
+# RGB 颜色（1.16+）：
+#   version_name: "<#FF5555>Custom <#55FF55>Colors"
+#   version_name: "<color:#FFD700>Golden Server</color>"
+#
+# 渐变效果：
+#   version_name: "<gradient:red:blue>Rainbow Server</gradient>"
+#   version_name: "<gradient:gold:yellow>Premium Network</gradient>"
+#
+# 复杂组合：
+#   version_name: "<bold><gold>VIP</gold></bold> <gray>| <green>1.8-1.21</green></gray>"
+#   version_name: "<rainbow>Rainbow Server</rainbow> <white>v1.0</white>"

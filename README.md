@@ -1,198 +1,300 @@
 # VersionTinmoli
 
-一个轻量级的代理服务器插件，用于自定义服务器列表中显示的版本名称。
+> **Version**: 1.0.2  
+> **Supported Platforms**: Velocity 3.0+ | BungeeCord 1.16+ | Bukkit/Spigot/Paper 1.20.1+
 
-## 支持的平台
+A lightweight Minecraft proxy/server plugin for customizing the version name displayed in the server list, with rich color and formatting support.
 
-- ✅ **Velocity 3.5+** - 已实现（需要 Java 21+）
-- ✅ **BungeeCord 1.16+** - 已实现（支持 Java 17+）
+[中文文档](README_CN.md) | [English Documentation](README.md)
 
-## 项目结构
+---
 
+## Table of Contents
+
+- [Features](#features)
+- [Supported Platforms](#supported-platforms)
+- [Quick Start](#quick-start)
+- [Color Support](#color-support)
+- [Commands](#commands)
+- [Configuration](#configuration)
+- [FAQ](#faq)
+- [Changelog](#changelog)
+
+---
+
+## Features
+
+- **Colored Version Names** - Velocity supports MiniMessage format (RGB, gradients, rainbow), BungeeCord/Bukkit support legacy color codes
+- **Rich Formatting** - Bold, italic, underline, strikethrough support
+- **Hot Reload** - Reload configuration with `/vt reload` command
+- **Dynamic Modification** - Instantly modify version name with `/vt md <name>` command
+- **Simple Configuration** - YAML configuration file
+- **Lightweight** - No performance impact
+- **Auto Fallback** - Compatible with older client versions
+- **Multi-language** - Supports English and Chinese
+
+---
+
+## Supported Platforms
+
+| Platform | Version | Java Version | Status |
+|----------|---------|--------------|--------|
+| Velocity | 3.0+ | Java 21+ | Fully Supported |
+| BungeeCord | 1.16+ | Java 17+ | Fully Supported |
+| Bukkit/Spigot | 1.20.1-1.21.11 | Java 17+ | Requires newer version |
+| Paper | 1.20.1-1.21.11 | Java 17+ | Fully Supported |
+
+---
+
+## Quick Start
+
+### Installation
+
+1. Download the JAR file for your platform from [Releases](https://github.com/Tinmoli/VersionTinmoli/releases)
+2. Place the JAR file in your server's `plugins/` directory
+3. Restart the server
+4. Edit the configuration file (auto-generated)
+5. Use `/vt reload` to reload the configuration
+
+### Configuration File Location
+
+- **Velocity**: `plugins/versiontinmoli/config.yml`
+- **BungeeCord**: `plugins/VersionTinmoli/config.yml`
+- **Bukkit**: `plugins/VersionTinmoli/config.yml`
+
+---
+
+## Color Support
+
+### Velocity - MiniMessage Format
+
+```yaml
+# Named colors
+version_name: "<gold>Velocity</gold> <gray>1.8-1.21</gray>"
+
+# RGB colors (1.16+)
+version_name: "<#FF5555>Red <#55FF55>Green"
+
+# Gradient effects
+version_name: "<gradient:red:blue>Rainbow Server</gradient>"
+
+# Rainbow effects
+version_name: "<rainbow>Rainbow Server</rainbow>"
+
+# Style combinations
+version_name: "<bold><gold>VIP</gold></bold> <gray>| <green>Online</green></gray>"
 ```
-VersionTinmoli/
-├── velocity/          # Velocity 实现
-│   ├── src/
-│   ├── build.gradle
-│   └── README.md
-├── bungeecord/        # BungeeCord 实现
-│   ├── src/
-│   ├── build.gradle
-│   └── README.md
-├── build.gradle       # 根构建文件
-├── settings.gradle    # 多模块配置
-└── README.md          # 本文件
+
+**Available Colors**: `<red>`, `<gold>`, `<yellow>`, `<green>`, `<aqua>`, `<blue>`, `<light_purple>`, `<white>`, `<gray>`, `<dark_gray>`, `<black>`
+
+**Available Styles**: `<bold>`, `<italic>`, `<underlined>`, `<strikethrough>`
+
+---
+
+### BungeeCord/Bukkit - Legacy Color Codes
+
+```yaml
+# Basic colors
+version_name: "&6BungeeCord &71.8-1.21"
+
+# With formatting
+version_name: "&l&6VIP Server&r &7| &a1.8-1.21"
+
+# Multi-color combinations
+version_name: "&cRed &6Gold &eYellow &aGreen"
 ```
 
-## 简介
+**Color Codes**: `&0`-`&9`, `&a`-`&f` (black, dark blue, dark green, dark aqua, dark red, purple, gold, gray, dark gray, blue, green, aqua, red, pink, yellow, white)
 
-VersionTinmoli 允许服务器管理员自定义 Minecraft 服务器列表中显示的版本信息。通过简单的 TOML 配置文件，您可以将默认的版本信息替换为任何自定义文本。
+**Format Codes**: `&l` (bold), `&m` (strikethrough), `&n` (underline), `&o` (italic), `&r` (reset)
 
-**特性：**
-- 简单的 TOML 配置文件
-- 轻量级设计，无性能影响
-- 自动创建默认配置
-- 完善的错误处理和日志记录
-- 多平台支持（Velocity 和 BungeeCord）
+---
 
-## 快速开始
+### Client Compatibility
 
-### Velocity
+| Client Version | Supported Colors |
+|----------------|------------------|
+| 1.16+ | Full RGB colors |
+| 1.7-1.15 | 16 named colors |
+| < 1.7 | Basic colors |
 
-1. 从 [Releases](https://github.com/Tinmoli/VersionTinmoli/releases) 下载 `versiontinmoli-velocity-1.0.1.jar`
-2. 放入 Velocity 的 `plugins/` 目录
-3. 重启服务器
-4. 编辑 `plugins/versiontinmoli/config.toml` 配置文件
-5. 再次重启服务器使配置生效
+---
 
-详细说明请查看 [velocity/README.md](velocity/README.md)
+## Commands
 
-### BungeeCord
+| Command | Permission | Description |
+|---------|------------|-------------|
+| `/vt` | `versiontinmoli.admin` | Show plugin information |
+| `/vt reload` | `versiontinmoli.admin` | Reload configuration file |
+| `/vt md <name>` | `versiontinmoli.admin` | Modify version name |
 
-1. 从 [Releases](https://github.com/Tinmoli/VersionTinmoli/releases) 下载 `versiontinmoli-bungeecord-1.0.1.jar`
-2. 放入 BungeeCord 的 `plugins/` 目录
-3. 重启服务器
-4. 编辑 `plugins/VersionTinmoli/config.toml` 配置文件
-5. 再次重启服务器使配置生效
+**Permission Notes**: Velocity/BungeeCord require `versiontinmoli.admin` permission, Bukkit defaults to OP
 
-详细说明请查看 [bungeecord/README.md](bungeecord/README.md)
+---
 
-## 配置说明
+## Configuration
 
-### 配置文件位置
+### Basic Configuration
 
-- **Velocity**: `plugins/versiontinmoli/config.toml`
-- **BungeeCord**: `plugins/VersionTinmoli/config.toml`
+```yaml
+# VersionTinmoli Configuration File
+# Customize the version name displayed in the server list
 
-### 配置文件格式
+# Language setting (en_US or zh_CN)
+language: "en_US"
 
+# Version name configuration
+version_name: "Velocity 1.8.x-1.21.11"
+```
+
+### Language Settings
+
+The plugin supports multiple languages. You can set the language in the configuration file:
+
+- `en_US` - English
+- `zh_CN` - Simplified Chinese
+
+After modifying the `language` field, use `/vt reload` to reload the configuration and switch languages. All command messages and prompts will be displayed in the corresponding language.
+
+### Language File Customization
+
+Language files are automatically copied to the external directory on first run:
+- **Velocity**: `plugins/versiontinmoli/lang/`
+- **BungeeCord**: `plugins/VersionTinmoli/lang/`
+- **Bukkit**: `plugins/VersionTinmoli/lang/`
+
+You can edit these files to customize messages. The plugin will load from the external directory first, then fall back to the built-in files.
+
+### Configuration Examples
+
+**Regular Server**
+```yaml
+# Velocity
+version_name: "<gold>Minecraft</gold> <gray>1.8-1.21</gray>"
+
+# BungeeCord/Bukkit
+version_name: "&6Minecraft &71.8-1.21"
+```
+
+**VIP Server**
+```yaml
+# Velocity
+version_name: "<bold><gradient:gold:yellow>VIP Server</gradient></bold>"
+
+# BungeeCord/Bukkit
+version_name: "&l&6VIP Server"
+```
+
+**Minigames Server**
+```yaml
+# Velocity
+version_name: "<rainbow>MiniGames</rainbow> <white>| <green>Online</green></white>"
+
+# BungeeCord/Bukkit
+version_name: "&cM&6i&en&ai&9G&ba&dm&5e&cs &f| &aOnline"
+```
+
+**PVP Server**
+```yaml
+# Velocity
+version_name: "<bold><red>PVP</red></bold> <gray>| <yellow>Fighting</yellow></gray>"
+
+# BungeeCord/Bukkit
+version_name: "&l&cPVP &r&7| &eFighting"
+```
+
+---
+
+## FAQ
+
+### Migrating from TOML to YAML
+
+If you're upgrading from an older version (before v1.0.2), you need to migrate your configuration from TOML format to YAML format.
+
+**Automatic Migration (Recommended):**
+1. Backup your `config.toml` file
+2. Delete the `config.toml` file
+3. Restart the server or run `/vt reload`
+4. The plugin will automatically create a new `config.yml` file
+5. Edit `config.yml` and set your custom version name
+
+**Manual Migration:**
+
+TOML format (old):
 ```toml
-# VersionTinmoli 配置文件
-# 自定义服务器列表中显示的版本名称
-
-# 示例：
-#   version_name = "Velocity 1.8.x-1.21.11"
-version_name = "Velocity 1.8.x-1.21.11"
+version_name = "My Server 1.20"
 ```
 
-### 配置选项
-
-| 选项 | 类型 | 默认值 | 描述 |
-|------|------|--------|------|
-| `version_name` | String | 平台默认值 | 在服务器列表中显示的版本名称 |
-
-### 配置示例
-
-```toml
-# 简单文本
-version_name = "我的服务器 1.20"
-
-# 版本范围
-version_name = "Minecraft 1.8.x-1.21.11"
-
-# 自定义名称
-version_name = "Premium Network v1.0"
+YAML format (new):
+```yaml
+version_name: "My Server 1.20"
 ```
 
-## 构建说明
+Main difference: Use colon `:` instead of equals sign `=`
 
-### 前置要求
+### Configuration Not Working
 
-- JDK 21 或更高版本
-- Gradle 8.0 或更高版本（或使用包含的 Gradle Wrapper）
+1. Ensure the configuration file is in the correct location
+2. Check YAML syntax is correct
+3. Use `/vt reload` to reload configuration
+4. If still not working, restart the server
 
-### 构建所有模块
+### Colors Not Displaying or Showing as Text
 
-```bash
-# Windows
-gradlew.bat clean build
+**Problem**: RGB color codes display as text like `Red</> Green</>`
 
-# Linux/Mac
-./gradlew clean build
+**Cause**: Using incorrect closing tags `</>`
+
+**Solution**:
+```yaml
+# Wrong
+version_name: "<#FF5555>Red</> <#55FF55>Green</>"
+
+# Correct
+version_name: "<#FF5555>Red <#55FF55>Green"
+version_name: "<color:#FF5555>Red</color> <color:#55FF55>Green</color>"
 ```
 
-### 构建特定模块
+**Other Color Issues**:
+1. **Velocity**: Use MiniMessage format `<gold>text</gold>`
+2. **BungeeCord/Bukkit**: Use `&` or `§` color codes
+3. RGB colors require Minecraft 1.16+ client
+4. Check server logs for errors
 
-```bash
-# 仅构建 Velocity
-gradlew.bat :velocity:build
+### Platform-Specific Requirements
 
-# 仅构建 BungeeCord
-gradlew.bat :bungeecord:build
-```
+1. **Velocity**: Requires Velocity 3.0+ and Java 21+
+2. **BungeeCord**: Requires BungeeCord 1.16+ and Java 17+
+3. **Bukkit**: Requires Minecraft 1.20.1+ and Java 17+
 
-### 构建输出
+---
 
-构建后的 JAR 文件位于：
-- Velocity: `velocity/build/libs/versiontinmoli-velocity-1.0.1.jar`
-- BungeeCord: `bungeecord/build/libs/versiontinmoli-bungeecord-1.0.1.jar`
+## Changelog
 
-### 便捷构建任务
-
-使用 `buildPlugin` 任务会将所有 JAR 复制到 `build/plugins/` 目录：
-
-```bash
-gradlew.bat buildPlugin
-```
-
-## 系统要求
-
-### Velocity
-- Velocity 3.0 或更高版本
-- Java 21 或更高版本
-
-### BungeeCord
-- BungeeCord 1.16 或更高版本
-- Java 17 或更高版本（推荐 Java 21）
-
-## 故障排除
-
-### 配置文件未生效
-
-- 确保配置文件位于正确的位置
-- 检查配置文件格式是否正确（TOML 语法）
-- 修改配置后需要重启代理服务器
-
-### 版本名称显示异常
-
-- 检查配置文件中的版本名称是否正确
-- 查看服务器日志中是否有错误信息
-
-### 插件未加载
-
-- **Velocity**: 确保使用 Velocity 3.5.0+ 和 Java 21+
-- **BungeeCord**: 确保使用 BungeeCord 1.16+ 和 Java 17+
-- 检查日志文件中的错误信息
-
-## 开发
-
-### 项目规范
-
-- Velocity: Java 21
-- BungeeCord: Java 17+ 兼容（使用 Java 21 编译）
-- 遵循现有代码风格
-- 为新功能编写测试
-
-## 许可证
-
-本项目采用 MIT 许可证。详见 LICENSE 文件。
-
-## 支持
-
-如有问题或建议，请在 [GitHub Issues](https://github.com/Tinmoli/VersionTinmoli/issues) 页面提交。
-
-## 更新日志
+### v1.0.2 (Latest)
+- Migrated from TOML to YAML configuration format
+- Added multi-language support (English and Chinese)
+- Added external language file loading support
+- Improved configuration file comments (English only)
+- Fixed configuration reload issues
+- Enhanced error handling and logging
 
 ### v1.0.1
-- 添加 BungeeCord 支持
-- BungeeCord 版本支持 Java 17+
-- 移除 MiniMessage 相关代码和文档
-- 优化项目结构为多模块
+- Initial release with TOML configuration
+- Basic version name customization
+- Color and formatting support
 
-### v1.0.0
-- 初始版本发布
-- 支持 Velocity 3.5+
-- 支持 BungeeCord 1.16+
-- 支持自定义版本名称
-- 自动配置文件创建
-- 完善的错误处理
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+## Support
+
+For issues or suggestions, please submit them on [GitHub Issues](https://github.com/Tinmoli/VersionTinmoli/issues).
+
+---
+
+**Documentation Version**: 1.0.2  
+**Maintainer**: Tinmoli

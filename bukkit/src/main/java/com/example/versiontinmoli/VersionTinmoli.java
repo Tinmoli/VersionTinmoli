@@ -1,15 +1,15 @@
 package com.example.versiontinmoli;
 
-import net.md_5.bungee.api.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.nio.file.Path;
 
 /**
- * VersionTinmoli is a lightweight BungeeCord plugin that customizes the version name
- * displayed in the server list. It intercepts ServerPing events to replace the default version
+ * VersionTinmoli is a lightweight Bukkit plugin that customizes the version name
+ * displayed in the server list. It intercepts ServerListPing events to replace the default version
  * information with a custom version name from the configuration.
  */
-public class VersionTinmoli extends Plugin {
+public class VersionTinmoli extends JavaPlugin {
     private ConfigLoader configLoader;
     private LanguageLoader languageLoader;
 
@@ -58,10 +58,12 @@ public class VersionTinmoli extends Plugin {
 
         // Create and register PingEventListener
         PingEventListener pingEventListener = new PingEventListener(configLoader, getLogger());
-        getProxy().getPluginManager().registerListener(this, pingEventListener);
+        getServer().getPluginManager().registerEvents(pingEventListener, this);
 
         // Register command
-        getProxy().getPluginManager().registerCommand(this, new CommandHandler(this));
+        CommandHandler commandHandler = new CommandHandler(this);
+        getCommand("vt").setExecutor(commandHandler);
+        getCommand("vt").setTabCompleter(commandHandler);
 
         // Log startup message
         getLogger().info(languageLoader.getMessage("plugin.enabled"));

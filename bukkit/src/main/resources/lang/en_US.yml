@@ -1,0 +1,32 @@
+# English Language File for VersionTinmoli
+
+plugin:
+  enabled: "VersionTinmoli plugin enabled"
+  disabled: "VersionTinmoli plugin disabled"
+
+config:
+  field_not_found: "version_name field not found in config. Using default value."
+  loaded: "Loaded version name from config: {0}"
+  invalid_type: "Invalid type for version_name: {0}. Using default value."
+  parse_failed: "Failed to parse config.yml: {0}. Using default version name."
+  saved_success: "Configuration saved successfully to: {0}"
+  save_failed: "Failed to save config file: {0}"
+
+command:
+  help_title: "VersionTinmoli Commands"
+  help_usage: "Usage: /vt <reload|md>"
+  help_reload: "  /vt reload - Reload configuration"
+  help_modify: "  /vt md <name> - Modify version name"
+  unknown_command: "Unknown command. Use /vt for help."
+  no_permission: "You don't have permission to use this command."
+
+reload:
+  success: "Configuration reloaded successfully!"
+  current_version: "Current version name: {0}"
+  failed: "Failed to reload configuration: {0}"
+
+modify:
+  usage: "Usage: /vt md <name>"
+  success: "Version name updated to: {0}"
+  saved: "Configuration saved to file."
+  failed: "Failed to modify version name: {0}"

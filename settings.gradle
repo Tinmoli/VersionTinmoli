@@ -2,3 +2,4 @@ rootProject.name = 'versiontinmoli'
 
 include 'velocity'
 include 'bungeecord'
+include 'bukkit'
