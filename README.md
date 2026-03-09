@@ -1,6 +1,8 @@
 # VersionTinmoli
 
-![VersionTinmoli Banner](images/8823B3DC.jpg)
+<p align="center">
+  <img src="images/8823B3DC.jpg" alt="VersionTinmoli Banner" width="600">
+</p>
 
 > **Version**: 1.0.2  
 > **Supported Platforms**: Velocity 3.0+ | BungeeCord 1.16+ | Bukkit/Spigot/Paper 1.20.1+
@@ -300,3 +302,4 @@ For issues or suggestions, please submit them on [GitHub Issues](https://github.
 
 **Documentation Version**: 1.0.2  
 **Maintainer**: Tinmoli
+
