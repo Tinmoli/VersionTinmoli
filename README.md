@@ -1,7 +1,7 @@
 # VersionTinmoli
 
 <p align="center">
-  <img src="images/8823B3DC.jpg" alt="VersionTinmoli Banner" width="300">
+  <img src="images/8823B3DC.jpg" alt="VersionTinmoli Banner" width="150">
 </p>
 
 > **Version**: 1.0.2  
@@ -302,5 +302,6 @@ For issues or suggestions, please submit them on [GitHub Issues](https://github.
 
 **Documentation Version**: 1.0.2  
 **Maintainer**: Tinmoli
+
 
 
