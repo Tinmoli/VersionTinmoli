@@ -1,6 +1,8 @@
 # VersionTinmoli
 
-![VersionTinmoli Banner](images/banner.png)
+<p align="center">
+  <img src="images/8823B3DC.jpg" alt="VersionTinmoli Banner" width="150">
+</p>
 
 > **版本**: 1.0.2  
 > **支持平台**: Velocity 3.0+ | BungeeCord 1.16+ | Bukkit/Spigot/Paper 1.20.1+
@@ -267,3 +269,4 @@ version_name = "<color:#FF5555>Red</color> <color:#55FF55>Green</color>"
 
 **文档版本**: 1.0.2  
 **维护者**: Tinmoli
+
