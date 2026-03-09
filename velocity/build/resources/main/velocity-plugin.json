@@ -1,0 +1,16 @@
+{
+  "id": "versiontinmoli",
+  "name": "VersionTinmoli",
+  "version": "1.0.2",
+  "description": "A lightweight Velocity plugin to customize the version name displayed in the server list",
+  "authors": [
+    "Author"
+  ],
+  "dependencies": [
+    {
+      "id": "velocity",
+      "version": "3.5.0"
+    }
+  ],
+  "main": "com.example.versiontinmoli.VersionTinmoli"
+}

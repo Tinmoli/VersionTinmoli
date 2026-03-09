@@ -1,5 +1,5 @@
 name: VersionTinmoli
-version: 1.0.2
+version: ${version}
 main: com.example.versiontinmoli.VersionTinmoli
 author: Author
 description: A lightweight Bukkit plugin to customize the version name displayed in the server list

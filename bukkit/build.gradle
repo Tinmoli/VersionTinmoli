@@ -77,6 +77,16 @@ test {
     finalizedBy jacocoTestReport
 }
 
+// Ensure resources are processed before building JAR
+processResources {
+    // Expand version in plugin.yml
+    filesMatching('plugin.yml') {
+        expand(
+            'version': project.version
+        )
+    }
+}
+
 // Task to build and copy JAR to a convenient location
 task buildPlugin(type: Copy) {
     dependsOn jar

@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Implementation-Title: VersionTinmoli-Velocity
+Implementation-Version: 1.0.2
+Built-By: tinmo
+Built-JDK: 21.0.9
+Main-Class: com.example.versiontinmoli.VersionTinmoli
+

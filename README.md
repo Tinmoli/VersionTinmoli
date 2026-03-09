@@ -1,5 +1,7 @@
 # VersionTinmoli
 
+![VersionTinmoli Banner](images/8823B3DC.jpg)
+
 > **Version**: 1.0.2  
 > **Supported Platforms**: Velocity 3.0+ | BungeeCord 1.16+ | Bukkit/Spigot/Paper 1.20.1+
 
@@ -269,6 +271,23 @@ version_name: "<color:#FF5555>Red</color> <color:#55FF55>Green</color>"
 
 ---
 
+## Changelog
+
+### v1.0.2 (Latest)
+- Migrated from TOML to YAML configuration format
+- Added multi-language support (English and Chinese)
+- Added external language file loading support
+- Improved configuration file comments (English only)
+- Fixed configuration reload issues
+- Enhanced error handling and logging
+
+### v1.0.1
+- Initial release with TOML configuration
+- Basic version name customization
+- Color and formatting support
+
+---
+
 ## License
 
 This project is licensed under the MIT License.
@@ -281,4 +300,3 @@ For issues or suggestions, please submit them on [GitHub Issues](https://github.
 
 **Documentation Version**: 1.0.2  
 **Maintainer**: Tinmoli
-

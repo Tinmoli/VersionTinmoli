@@ -1,10 +1,13 @@
 # VersionTinmoli
 
+![VersionTinmoli Banner](images/banner.png)
+
 > **版本**: 1.0.2  
 > **支持平台**: Velocity 3.0+ | BungeeCord 1.16+ | Bukkit/Spigot/Paper 1.20.1+
 
-[中文文档](README_CN.md) | [English Documentation](README.md)
 一个轻量级的 Minecraft 代理/服务器插件，用于自定义服务器列表中显示的版本名称，支持丰富的颜色和格式。
+
+[中文文档](README_CN.md) | [English Documentation](README.md)
 
 ---
 
